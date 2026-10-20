@@ -1,5 +1,5 @@
-# Pages CMS config — this is what turns the repo into an editor for the team.
-# Log in at https://app.pagescms.org with GitHub and open this repo.
+# Pages CMS config — this turns the repo into an editor for the team.
+# Open https://app.pagescms.org, sign in with GitHub, pick samkiller222/up-test.
 
 media:
   input: assets/images
@@ -7,42 +7,155 @@ media:
 
 content:
   - name: pages
-    label: Pages
+    label: Guide pages
     type: collection
     path: pages
     view:
-      fields: [title, order]
+      fields: [title]
       primary: title
-      sort: [order]
     fields:
       - name: title
-        label: Page title (also used in the menu)
+        label: Big page heading
         type: string
         required: true
+      - name: browser_title
+        label: Browser tab title
+        type: string
       - name: subtitle
-        label: Subtitle (optional)
+        label: Line under the heading
         type: string
-      - name: order
-        label: Menu position (1 = first)
-        type: number
       - name: permalink
-        label: Web address, e.g. /contact/
+        label: Web address (home page is /)
         type: string
+      - name: breadcrumb
+        label: Breadcrumb trail
+        type: string
+        list: true
+      - name: tab_label
+        label: Tab label above the steps
+        type: string
+      - name: intro
+        label: Short intro above the steps
+        type: text
+      - name: phases
+        label: Phases (numbered automatically)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{index}. {title}"
+        fields:
+          - name: title
+            label: Phase title
+            type: string
+            required: true
+          - name: summary
+            label: One-line summary
+            type: string
+          - name: start_closed
+            label: Start collapsed (hide steps until "View more" is clicked)
+            type: boolean
+          - name: steps
+            label: Steps in this phase
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{heading}"
+            fields:
+              - name: heading
+                label: Bold start of the step
+                type: string
+              - name: text
+                label: Rest of the step (links work like [text](https://...))
+                type: text
+      - name: cards
+        label: Quick-action cards at the bottom
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Card title
+            type: string
+          - name: text
+            label: Card text
+            type: string
+          - name: button
+            label: Button label
+            type: string
+          - name: link
+            label: Button link
+            type: string
       - name: body
-        label: Page text
+        label: Extra free text (optional, shows under the steps)
         type: rich-text
 
   - name: settings
-    label: Site settings
+    label: Site settings (header, notice, menu, footer)
     type: file
     path: _data/settings.yml
     fields:
       - name: site_name
-        label: Site name
+        label: Site name (next to the logo)
         type: string
-      - name: announcement
-        label: Banner at the top (leave empty to hide)
+      - name: logo_initials
+        label: Logo letters
         type: string
-      - name: footer
-        label: Footer text
+      - name: route_from
+        label: Route bar — From
+        type: string
+      - name: route_to
+        label: Route bar — To
+        type: string
+      - name: notice
+        label: Blue notice bar text (leave empty to hide)
+        type: text
+      - name: notice_link_text
+        label: Notice link text
+        type: string
+      - name: notice_link_url
+        label: Notice link address
+        type: string
+      - name: menu
+        label: Top menu
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            type: string
+          - name: link
+            label: Link (/ for home, # for none yet)
+            type: string
+      - name: footer_links
+        label: Footer links (main row)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            type: string
+          - name: link
+            type: string
+      - name: footer_small_links
+        label: Footer links (small row)
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - name: label
+            type: string
+          - name: link
+            type: string
+      - name: copyright
+        label: Copyright line
         type: string

@@ -1,15 +1,10 @@
-title: Up Test
-description: A simple text website your whole team can edit — no HTML needed.
+title: Residence Guide
+baseurl: /up-test
 
-# Pages live in the /pages folder as Markdown files.
 include:
   - pages
 
 defaults:
-  - scope:
-      path: "pages"
-    values:
-      layout: page
   - scope:
       path: ""
     values:

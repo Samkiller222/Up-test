@@ -1,3 +1,39 @@
-site_name: Up Test
-announcement: "🚧 Draft site — content is changing often."
-footer: Made by the team · Edited with Pages CMS
+site_name: Residence Guide
+logo_initials: RG
+route_from: Country of residence
+route_to: Destination country
+notice: This guide covers temporary residence permits and long-stay visas. Have your online application reference number ready before booking.
+notice_link_text: Learn more
+notice_link_url: "#"
+menu:
+  - label: Home
+    link: "#"
+  - label: Temporary residence permit
+    link: /
+  - label: Long-stay visa
+    link: "#"
+  - label: Appointments
+    link: "#"
+  - label: Visiting a centre
+    link: "#"
+  - label: Application status
+    link: "#"
+footer_links:
+  - label: About us
+    link: "#"
+  - label: Contact
+    link: "#"
+  - label: Refunds
+    link: "#"
+footer_small_links:
+  - label: Disclaimer
+    link: "#"
+  - label: Terms
+    link: "#"
+  - label: Cookies
+    link: "#"
+  - label: Privacy
+    link: "#"
+  - label: Accessibility
+    link: "#"
+copyright: © 2026 Residence Guide. All rights reserved.

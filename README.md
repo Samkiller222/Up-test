@@ -6,7 +6,7 @@ A plain-text team website. Content lives in Markdown files, GitHub Pages builds 
 
 1. Go to **https://app.pagescms.org** and sign in with your GitHub account.
 2. Open **samkiller222/up-test**.
-3. Click **Pages** to edit a page, or **Site settings** for the site name, top banner and footer.
+3. Click **Pages** to edit a page, or **Site settings** for the header, notice bar, menu and footer.
 4. Hit **Save**. The site updates within a minute or two.
 
 To add a new page, click **Add an entry** under Pages, give it a title, a menu position and a web address like `/contact/`.
@@ -15,8 +15,8 @@ To add a new page, click **Add an entry** under Pages, give it a title, a menu p
 
 | Path | What it is |
 |------|------------|
-| `pages/*.md` | Every page's text |
-| `_data/settings.yml` | Site name, banner, footer |
+| `pages/*.md` | Each guide page (phases, steps, cards) |
+| `_data/settings.yml` | Header, notice bar, menu, footer |
 | `_layouts/page.html` | The one HTML template (only Sam needs this) |
 | `assets/style.css` | Styling |
 | `.pages.yml` | Editor setup |

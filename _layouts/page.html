@@ -1,36 +1,152 @@
-<!doctype html>
+{%- assign s = site.data.settings -%}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.data.settings.site_name | default: site.title }}</title>
+  <title>{{ page.browser_title | default: page.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
 </head>
 <body>
-  {% if site.data.settings.announcement and site.data.settings.announcement != "" %}
-  <div class="banner">{{ site.data.settings.announcement }}</div>
-  {% endif %}
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="site-header">
-    <a class="brand" href="{{ '/' | relative_url }}">{{ site.data.settings.site_name | default: site.title }}</a>
-    <nav>
-      {% assign nav_pages = site.pages | where_exp: "p", "p.order" | sort: "order" %}
-      {% for p in nav_pages %}
-        <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>{{ p.title }}</a>
-      {% endfor %}
-    </nav>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="logo" href="{{ '/' | relative_url }}"><span class="logo-mark">{{ s.logo_initials }}</span>{{ s.site_name }}</a>
+      <div class="route" aria-label="Selected route">
+        <span>From <strong>{{ s.route_from }}</strong></span>
+        <span class="arrow" aria-hidden="true">✈</span>
+        <span>To <strong>{{ s.route_to }}</strong></span>
+      </div>
+      <div class="actions">
+        <button class="icon-btn" type="button" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+        <select class="lang" aria-label="Language"><option>English</option></select>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <h1>{{ page.title }}</h1>
-    {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
-    <article>
+  {%- if s.notice and s.notice != "" %}
+  <div class="notice" id="notice" role="note">
+    <div class="wrap">
+      <span class="icon" aria-hidden="true">i</span>
+      <p>{{ s.notice }}{% if s.notice_link_text and s.notice_link_text != "" %} <a href="{{ s.notice_link_url | default: '#' }}">{{ s.notice_link_text }}</a>{% endif %}</p>
+      <button type="button" onclick="document.getElementById('notice').hidden = true">Dismiss</button>
+    </div>
+  </div>
+  {%- endif %}
+
+  <nav class="mainnav" aria-label="Main">
+    <div class="wrap">
+      <ul>
+        {%- for item in s.menu %}
+        {%- assign href = item.link | default: '#' -%}
+        {%- if href contains '://' or href == '#' -%}{%- assign url = href -%}{%- else -%}{%- assign url = href | relative_url -%}{%- endif %}
+        <li><a href="{{ url }}"{% if href == page.url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </nav>
+
+  {%- if page.breadcrumb and page.breadcrumb.size > 0 %}
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <div class="wrap">
+      <ol>
+        {%- for crumb in page.breadcrumb %}
+        <li><a href="#"{% if forloop.last %} aria-current="page"{% endif %}>{{ crumb }}</a></li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </nav>
+  {%- endif %}
+
+  <main id="main" class="wrap">
+    <div class="page-head">
+      <h1>{{ page.title }}</h1>
+      {%- if page.subtitle %}
+      <p>{{ page.subtitle }}</p>
+      {%- endif %}
+    </div>
+
+    {%- if page.tab_label %}
+    <div class="tabs"><span>{{ page.tab_label }}</span></div>
+    {%- endif %}
+    {%- if page.intro %}
+    <p class="intro">{{ page.intro }}</p>
+    {%- endif %}
+
+    {%- if page.phases and page.phases.size > 0 %}
+    <ol class="steps" id="steps">
+      {%- for phase in page.phases %}
+      <li class="step" data-open="{% if phase.start_closed %}false{% else %}true{% endif %}">
+        <div class="step-head">
+          <span class="step-num">{{ forloop.index }}</span>
+          <div class="step-titles">
+            <h3>{{ phase.title }}</h3>
+            {%- if phase.summary %}
+            <p>{{ phase.summary }}</p>
+            {%- endif %}
+          </div>
+          <button class="toggle" type="button" aria-expanded="{% if phase.start_closed %}false{% else %}true{% endif %}">View more <span class="chev">▾</span></button>
+        </div>
+        <div class="step-body">
+          <ol class="substeps">
+            {%- for sub in phase.steps %}
+            <li><strong>{{ sub.heading }}</strong> {{ sub.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+            {%- endfor %}
+          </ol>
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
+    {%- endif %}
+
+    {%- assign body = content | strip -%}
+    {%- if body != "" %}
+    <div class="page-body">
       {{ content }}
-    </article>
+    </div>
+    {%- endif %}
+
+    {%- if page.cards and page.cards.size > 0 %}
+    <section class="cards" aria-label="Quick actions">
+      {%- for card in page.cards %}
+      <div class="card">
+        <h2>{{ card.title }}</h2>
+        <p>{{ card.text }}</p>
+        <a class="btn" href="{{ card.link | default: '#' }}">{{ card.button }} <span aria-hidden="true">▸</span></a>
+      </div>
+      {%- endfor %}
+    </section>
+    {%- endif %}
   </main>
 
   <footer>
-    {{ site.data.settings.footer | default: "Made by the team" }}
+    <div class="wrap">
+      <ul>
+        {%- for l in s.footer_links %}
+        <li><a href="{{ l.link | default: '#' }}">{{ l.label }}</a></li>
+        {%- endfor %}
+      </ul>
+      <ul class="secondary">
+        {%- for l in s.footer_small_links %}
+        <li><a href="{{ l.link | default: '#' }}">{{ l.label }}</a></li>
+        {%- endfor %}
+      </ul>
+      <p class="copy">{{ s.copyright }}</p>
+    </div>
   </footer>
+
+  <script>
+    document.querySelectorAll('.step').forEach(step => {
+      const btn = step.querySelector('.toggle');
+      btn.addEventListener('click', () => {
+        const open = step.dataset.open !== 'true';
+        step.dataset.open = open;
+        btn.setAttribute('aria-expanded', open);
+      });
+    });
+  </script>
 </body>
 </html>
