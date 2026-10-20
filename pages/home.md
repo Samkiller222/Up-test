@@ -1,5 +1,5 @@
 ---
-title: Applying for a work permit from abroad test
+title: Applying for a work permit from abroad
 browser_title: Work Permit Guide
 subtitle: Step-by-step instructions for employees still outside Malta
 permalink: /
