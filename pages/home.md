@@ -1,5 +1,5 @@
 ---
-title: Applying for a work permit from abroad
+title: Applying for a work permit from abroad test
 browser_title: Work Permit Guide
 subtitle: Step-by-step instructions for employees still outside Malta
 permalink: /
@@ -55,13 +55,13 @@ cards:
   - title: Book an appointment
     text: Choose a date and time
     button: Book now
-    link: "#"
+    link: '#'
   - title: Application status
     text: See where your application is
     button: Check status
-    link: "#"
+    link: '#'
   - title: Find a centre
     text: Locations and opening hours
     button: Find a centre
-    link: "#"
+    link: '#'
 ---
