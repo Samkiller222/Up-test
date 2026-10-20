@@ -104,7 +104,7 @@ a { color: var(--accent); }
 
 /* Cards */
 .cards {
-  display: grid; grid-template-columns: repeat(3, 1fr); margin: 40px 0 64px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 40px 0 64px;
   box-shadow: 0 2px 10px rgba(22, 50, 79, .1); border-radius: 8px; overflow: hidden;
 }
 .card { padding: 20px; background: var(--bg); }

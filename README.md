@@ -1,15 +1,32 @@
-# Up Test
+# Up-test — Residence Guide
 
-A plain-text team website. Content lives in Markdown files, GitHub Pages builds the site, and Pages CMS gives the team an editor so nobody has to write HTML.
+A team-editable website. Content lives in plain files in this repo, GitHub Pages builds the site, and anyone with access can edit it **directly on the website**.
 
-## For the team: how to edit
+Live site: https://samkiller222.github.io/Up-test/
 
-1. Go to **https://app.pagescms.org** and sign in with your GitHub account.
-2. Open **samkiller222/up-test**.
-3. Click **Pages** to edit a page, or **Site settings** for the header, notice bar, menu and footer.
-4. Hit **Save**. The site updates within a minute or two.
+## For the team: editing on the site
 
-To add a new page, click **Add an entry** under Pages, give it a title, a menu position and a web address like `/contact/`.
+**First time (once per browser)**
+
+1. Ask Sam to add you as a collaborator on this repo, then accept the email invite.
+2. Open https://samkiller222.github.io/Up-test/#edit and click **✏️ Edit page** (bottom right).
+3. Follow the steps in the box to create a GitHub token (about 2 minutes), then paste it in and click **Connect**.
+
+After that, the **Edit page** button always shows for you on that browser.
+
+**Editing**
+
+- Click any text to change it. Press **Enter** when you're done with a line.
+- Use **▲ ▼ ✕** next to a phase, step, card or menu item to move or remove it. Use the **+ Add** buttons to add new ones.
+- To change where a menu item, card button or link goes, click it and edit the address in the little box.
+- To turn words in a step into a link, select them and click **🔗 Make selected text a link**.
+- Click **Save** (or press Ctrl+S). The live site updates in about a minute.
+
+**Sign out** forgets your token on that browser, which is useful on shared computers.
+
+## Backup editor
+
+Pages CMS also works: https://app.pagescms.org → sign in with GitHub → **Up-test**.
 
 ## Where things live
 
@@ -17,11 +34,7 @@ To add a new page, click **Add an entry** under Pages, give it a title, a menu p
 |------|------------|
 | `pages/*.md` | Each guide page (phases, steps, cards) |
 | `_data/settings.yml` | Header, notice bar, menu, footer |
-| `_layouts/page.html` | The one HTML template (only Sam needs this) |
-| `assets/style.css` | Styling |
-| `.pages.yml` | Editor setup |
-
-## One-time setup
-
-- **Turn on the site:** repo Settings → Pages → Source: *Deploy from a branch* → `main` / `(root)` → Save.
-- **Give teammates access:** repo Settings → Collaborators → add each person (they need write access to save).
+| `_layouts/page.html` | The HTML template |
+| `assets/style.css` | Site styling |
+| `assets/edit.js`, `assets/edit.css` | The on-page editor |
+| `.pages.yml` | Pages CMS setup |

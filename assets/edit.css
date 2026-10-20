@@ -17,9 +17,10 @@ body:not(.editing) .cards:not(:has([data-item])) { display: none; }
 body.editing { padding-bottom: 72px; }
 body.editing [data-f] {
   outline: 1px dashed rgba(15, 139, 141, .55); outline-offset: 2px; border-radius: 3px;
-  cursor: text; min-width: 1.5em; display: inline-block;
+  cursor: text;
 }
 body.editing h1[data-f], body.editing h2[data-f], body.editing h3[data-f], body.editing p[data-f] { display: block; }
+body.editing .logo-mark[data-f] { display: grid; }
 body.editing [data-f]:hover { background: rgba(15, 139, 141, .06); }
 body.editing [data-f]:focus { outline: 2px solid var(--accent); background: #fffbe6; }
 body.editing [data-f]:empty::before { content: attr(data-ph); color: #9aa6b2; font-style: italic; font-weight: 400; }
