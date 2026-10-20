@@ -1,6 +1,10 @@
 title: Residence Guide
 baseurl: /Up-test
 
+# Where the in-page editor saves to
+edit_repo: Samkiller222/Up-test
+edit_branch: main
+
 include:
   - pages
 

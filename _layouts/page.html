@@ -6,17 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.browser_title | default: page.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="{{ '/assets/edit.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
-<body>
+<body data-repo="{{ site.edit_repo }}" data-branch="{{ site.edit_branch | default: 'main' }}" data-page-path="{{ page.path }}" data-settings-path="_data/settings.yml" data-rev="{{ site.github.build_revision }}">
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="topbar">
     <div class="wrap">
-      <a class="logo" href="{{ '/' | relative_url }}"><span class="logo-mark">{{ s.logo_initials }}</span>{{ s.site_name }}</a>
+      <a class="logo" href="{{ '/' | relative_url }}"><span class="logo-mark" data-src="settings" data-f="logo_initials" data-ph="RG">{{ s.logo_initials }}</span><span data-src="settings" data-f="site_name" data-ph="Site name">{{ s.site_name }}</span></a>
       <div class="route" aria-label="Selected route">
-        <span>From <strong>{{ s.route_from }}</strong></span>
+        <span>From <strong data-src="settings" data-f="route_from" data-ph="From">{{ s.route_from }}</strong></span>
         <span class="arrow" aria-hidden="true">✈</span>
-        <span>To <strong>{{ s.route_to }}</strong></span>
+        <span>To <strong data-src="settings" data-f="route_to" data-ph="To">{{ s.route_to }}</strong></span>
       </div>
       <div class="actions">
         <button class="icon-btn" type="button" aria-label="Search">
@@ -27,80 +28,66 @@
     </div>
   </header>
 
-  {%- if s.notice and s.notice != "" %}
-  <div class="notice" id="notice" role="note">
+  <div class="notice" id="notice" role="note"{% if s.notice == nil or s.notice == "" %} hidden data-empty{% endif %}>
     <div class="wrap">
       <span class="icon" aria-hidden="true">i</span>
-      <p>{{ s.notice }}{% if s.notice_link_text and s.notice_link_text != "" %} <a href="{{ s.notice_link_url | default: '#' }}">{{ s.notice_link_text }}</a>{% endif %}</p>
-      <button type="button" onclick="document.getElementById('notice').hidden = true">Dismiss</button>
+      <p><span data-src="settings" data-f="notice" data-ph="Notice text (leave empty to hide the bar)">{{ s.notice }}</span> <a href="{{ s.notice_link_url | default: '#' }}" data-src="settings" data-f="notice_link_text" data-link="notice_link_url" data-href-raw="{{ s.notice_link_url | escape }}" data-ph="Link text">{{ s.notice_link_text }}</a></p>
+      <button type="button" class="dismiss" onclick="document.getElementById('notice').hidden = true">Dismiss</button>
     </div>
   </div>
-  {%- endif %}
 
   <nav class="mainnav" aria-label="Main">
     <div class="wrap">
-      <ul>
+      <ul data-src="settings" data-list="menu" data-inline>
         {%- for item in s.menu %}
         {%- assign href = item.link | default: '#' -%}
         {%- if href contains '://' or href == '#' -%}{%- assign url = href -%}{%- else -%}{%- assign url = href | relative_url -%}{%- endif %}
-        <li><a href="{{ url }}"{% if href == page.url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        <li data-item><a href="{{ url }}" data-f="label" data-link="link" data-href-raw="{{ item.link | escape }}" data-ph="Menu item"{% if href == page.url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
         {%- endfor %}
       </ul>
     </div>
   </nav>
 
-  {%- if page.breadcrumb and page.breadcrumb.size > 0 %}
   <nav class="crumbs" aria-label="Breadcrumb">
     <div class="wrap">
-      <ol>
+      <ol data-src="page" data-list="breadcrumb" data-strings data-inline>
         {%- for crumb in page.breadcrumb %}
-        <li><a href="#"{% if forloop.last %} aria-current="page"{% endif %}>{{ crumb }}</a></li>
+        <li data-item><a href="#" data-f="_" data-ph="Breadcrumb"{% if forloop.last %} aria-current="page"{% endif %}>{{ crumb }}</a></li>
         {%- endfor %}
       </ol>
     </div>
   </nav>
-  {%- endif %}
 
   <main id="main" class="wrap">
     <div class="page-head">
-      <h1>{{ page.title }}</h1>
-      {%- if page.subtitle %}
-      <p>{{ page.subtitle }}</p>
-      {%- endif %}
+      <h1 data-src="page" data-f="title" data-ph="Page heading">{{ page.title }}</h1>
+      <p data-src="page" data-f="subtitle" data-ph="Line under the heading">{{ page.subtitle }}</p>
     </div>
 
-    {%- if page.tab_label %}
-    <div class="tabs"><span>{{ page.tab_label }}</span></div>
-    {%- endif %}
-    {%- if page.intro %}
-    <p class="intro">{{ page.intro }}</p>
-    {%- endif %}
+    <div class="tabs"><span data-src="page" data-f="tab_label" data-ph="Tab label">{{ page.tab_label }}</span></div>
+    <p class="intro" data-src="page" data-f="intro" data-ph="Short intro above the steps">{{ page.intro }}</p>
 
-    {%- if page.phases and page.phases.size > 0 %}
-    <ol class="steps" id="steps">
+    <ol class="steps" id="steps" data-src="page" data-list="phases">
       {%- for phase in page.phases %}
-      <li class="step" data-open="{% if phase.start_closed %}false{% else %}true{% endif %}">
+      <li class="step" data-item data-open="{% if phase.start_closed %}false{% else %}true{% endif %}" {% if phase.start_closed %} data-keep='{"start_closed":true}'{% endif %}>
         <div class="step-head">
           <span class="step-num">{{ forloop.index }}</span>
           <div class="step-titles">
-            <h3>{{ phase.title }}</h3>
-            {%- if phase.summary %}
-            <p>{{ phase.summary }}</p>
-            {%- endif %}
+            <h3 data-f="title" data-ph="Phase title">{{ phase.title }}</h3>
+            <p data-f="summary" data-ph="One-line summary">{{ phase.summary }}</p>
           </div>
           <button class="toggle" type="button" aria-expanded="{% if phase.start_closed %}false{% else %}true{% endif %}">View more <span class="chev">▾</span></button>
         </div>
         <div class="step-body">
-          <ol class="substeps">
+          <ol class="substeps" data-list="steps">
             {%- for sub in phase.steps %}
-            <li><strong>{{ sub.heading }}</strong> {{ sub.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</li>
+            <li data-item><strong data-f="heading" data-ph="Bold start.">{{ sub.heading }}</strong> <span data-f="text" data-md data-ph="Rest of the step">{{ sub.text | markdownify | remove: '<p>' | remove: '</p>' | strip }}</span></li>
             {%- endfor %}
           </ol>
         </div>
       </li>
       {%- endfor %}
     </ol>
-    {%- endif %}
 
     {%- assign body = content | strip -%}
     {%- if body != "" %}
@@ -109,44 +96,45 @@
     </div>
     {%- endif %}
 
-    {%- if page.cards and page.cards.size > 0 %}
-    <section class="cards" aria-label="Quick actions">
+    <section class="cards" aria-label="Quick actions" data-src="page" data-list="cards">
       {%- for card in page.cards %}
-      <div class="card">
-        <h2>{{ card.title }}</h2>
-        <p>{{ card.text }}</p>
-        <a class="btn" href="{{ card.link | default: '#' }}">{{ card.button }} <span aria-hidden="true">▸</span></a>
+      <div class="card" data-item>
+        <h2 data-f="title" data-ph="Card title">{{ card.title }}</h2>
+        <p data-f="text" data-ph="Card text">{{ card.text }}</p>
+        <a class="btn" href="{{ card.link | default: '#' }}" data-link="link" data-href-raw="{{ card.link | escape }}"><span data-f="button" data-ph="Button">{{ card.button }}</span> <span aria-hidden="true">▸</span></a>
       </div>
       {%- endfor %}
     </section>
-    {%- endif %}
   </main>
 
   <footer>
     <div class="wrap">
-      <ul>
+      <ul data-src="settings" data-list="footer_links" data-inline>
         {%- for l in s.footer_links %}
-        <li><a href="{{ l.link | default: '#' }}">{{ l.label }}</a></li>
+        <li data-item><a href="{{ l.link | default: '#' }}" data-f="label" data-link="link" data-href-raw="{{ l.link | escape }}" data-ph="Link">{{ l.label }}</a></li>
         {%- endfor %}
       </ul>
-      <ul class="secondary">
+      <ul class="secondary" data-src="settings" data-list="footer_small_links" data-inline>
         {%- for l in s.footer_small_links %}
-        <li><a href="{{ l.link | default: '#' }}">{{ l.label }}</a></li>
+        <li data-item><a href="{{ l.link | default: '#' }}" data-f="label" data-link="link" data-href-raw="{{ l.link | escape }}" data-ph="Link">{{ l.label }}</a></li>
         {%- endfor %}
       </ul>
-      <p class="copy">{{ s.copyright }}</p>
+      <p class="copy" data-src="settings" data-f="copyright" data-ph="Copyright line">{{ s.copyright }}</p>
     </div>
   </footer>
 
+  <button id="ed-start" class="ed-start" type="button" hidden>✏️ Edit page</button>
+
   <script>
-    document.querySelectorAll('.step').forEach(step => {
-      const btn = step.querySelector('.toggle');
-      btn.addEventListener('click', () => {
-        const open = step.dataset.open !== 'true';
-        step.dataset.open = open;
-        btn.setAttribute('aria-expanded', open);
-      });
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.toggle');
+      if (!btn || document.body.classList.contains('editing')) return;
+      const step = btn.closest('.step');
+      const open = step.dataset.open !== 'true';
+      step.dataset.open = open;
+      btn.setAttribute('aria-expanded', open);
     });
   </script>
+  <script src="{{ '/assets/edit.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
 </body>
 </html>
