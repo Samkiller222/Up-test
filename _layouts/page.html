@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page.browser_title | default: page.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
