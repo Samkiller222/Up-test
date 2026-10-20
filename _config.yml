@@ -1,0 +1,20 @@
+title: Up Test
+description: A simple text website your whole team can edit — no HTML needed.
+
+# Pages live in the /pages folder as Markdown files.
+include:
+  - pages
+
+defaults:
+  - scope:
+      path: "pages"
+    values:
+      layout: page
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+exclude:
+  - README.md
+  - .pages.yml

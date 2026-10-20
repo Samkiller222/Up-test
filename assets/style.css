@@ -1,0 +1,98 @@
+:root {
+  --bg: #fbfaf7;
+  --text: #1f2328;
+  --muted: #6b7078;
+  --accent: #2f6fde;
+  --line: #e6e3dc;
+  --banner: #fff4d6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15171a;
+    --text: #e8e6e1;
+    --muted: #9aa0a8;
+    --accent: #7aa7ff;
+    --line: #2a2d32;
+    --banner: #3a3220;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.banner {
+  background: var(--banner);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+}
+
+.site-header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  font-family: system-ui, sans-serif;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+nav { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+nav a:hover, nav a.active { color: var(--accent); }
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3rem;
+}
+
+h1 { font-size: 2.2rem; line-height: 1.2; margin: 0 0 0.4rem; }
+.subtitle { color: var(--muted); margin: 0 0 2rem; font-size: 1.1rem; }
+
+h2 { margin-top: 2.2rem; font-size: 1.4rem; }
+
+a { color: var(--accent); }
+
+blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+}

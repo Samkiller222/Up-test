@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.data.settings.site_name | default: site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  {% if site.data.settings.announcement and site.data.settings.announcement != "" %}
+  <div class="banner">{{ site.data.settings.announcement }}</div>
+  {% endif %}
+
+  <header class="site-header">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.data.settings.site_name | default: site.title }}</a>
+    <nav>
+      {% assign nav_pages = site.pages | where_exp: "p", "p.order" | sort: "order" %}
+      {% for p in nav_pages %}
+        <a href="{{ p.url | relative_url }}" {% if p.url == page.url %}class="active"{% endif %}>{{ p.title }}</a>
+      {% endfor %}
+    </nav>
+  </header>
+
+  <main>
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
+    <article>
+      {{ content }}
+    </article>
+  </main>
+
+  <footer>
+    {{ site.data.settings.footer | default: "Made by the team" }}
+  </footer>
+</body>
+</html>

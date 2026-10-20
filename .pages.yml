@@ -1,0 +1,48 @@
+# Pages CMS config — this is what turns the repo into an editor for the team.
+# Log in at https://app.pagescms.org with GitHub and open this repo.
+
+media:
+  input: assets/images
+  output: /assets/images
+
+content:
+  - name: pages
+    label: Pages
+    type: collection
+    path: pages
+    view:
+      fields: [title, order]
+      primary: title
+      sort: [order]
+    fields:
+      - name: title
+        label: Page title (also used in the menu)
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle (optional)
+        type: string
+      - name: order
+        label: Menu position (1 = first)
+        type: number
+      - name: permalink
+        label: Web address, e.g. /contact/
+        type: string
+      - name: body
+        label: Page text
+        type: rich-text
+
+  - name: settings
+    label: Site settings
+    type: file
+    path: _data/settings.yml
+    fields:
+      - name: site_name
+        label: Site name
+        type: string
+      - name: announcement
+        label: Banner at the top (leave empty to hide)
+        type: string
+      - name: footer
+        label: Footer text
+        type: string
